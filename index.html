@@ -1,0 +1,682 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>pra você, sophia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --ink:#f0eaf8;
+  --ink2:#c9b8e8;
+  --ink3:#9b86c4;
+  --neon-pink:#ff6eb4;
+  --neon-blue:#6ab0ff;
+  --neon-purple:#b06aff;
+  --neon-gold:#ffd580;
+  --neon-white:#e8e0ff;
+  --glass:rgba(255,255,255,0.04);
+  --glass-border:rgba(255,255,255,0.08);
+}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{background:#07050f;color:var(--ink);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+
+#stars-canvas,#particles-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none}
+#stars-canvas{z-index:0}
+#particles-canvas{z-index:1}
+
+.bg-orbs{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.orb{position:absolute;border-radius:50%;filter:blur(70px);animation:breathe 8s ease-in-out infinite}
+.orb1{width:400px;height:400px;background:radial-gradient(circle,rgba(80,40,180,.28),transparent 70%);top:-150px;left:-80px}
+.orb2{width:350px;height:350px;background:radial-gradient(circle,rgba(180,40,120,.2),transparent 70%);bottom:-100px;right:-60px;animation-delay:-3s}
+.orb3{width:300px;height:300px;background:radial-gradient(circle,rgba(40,80,200,.15),transparent 70%);top:45%;left:50%;transform:translate(-50%,-50%);animation-delay:-5s}
+.orb4{width:220px;height:220px;background:radial-gradient(circle,rgba(200,160,40,.1),transparent 70%);top:15%;right:5%;animation-delay:-2s}
+@keyframes breathe{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+
+main{position:relative;z-index:2;max-width:580px;margin:0 auto;padding:0 22px}
+
+/* HERO */
+.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 0 40px}
+.hero-tag{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink3);margin-bottom:32px;opacity:0;animation:fadeUp .8s .3s forwards}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,17vw,84px);font-weight:300;line-height:1.05;margin-bottom:20px;opacity:0;animation:fadeUp 1s .6s forwards}
+.hero-title .gw{background:linear-gradient(135deg,var(--neon-white),var(--neon-pink),var(--neon-purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 24px rgba(180,100,255,.5))}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,5.5vw,24px);color:var(--ink2);margin-bottom:52px;opacity:0;animation:fadeUp .8s .9s forwards;line-height:1.65}
+.scroll-hint{display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeUp .8s 1.4s forwards;color:var(--ink3);font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,transparent,var(--neon-pink),transparent);animation:sPulse 2s ease-in-out infinite}
+@keyframes sPulse{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.section{padding:72px 0;position:relative}
+
+.eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:32px}
+.eyebrow-line{flex:1;height:1px;background:linear-gradient(to right,rgba(255,110,180,.3),transparent)}
+.eyebrow-line.r{background:linear-gradient(to left,rgba(255,110,180,.3),transparent)}
+.eyebrow-text{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--neon-pink);white-space:nowrap}
+
+.gc{background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:26px 22px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);position:relative;overflow:hidden}
+.gc::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.03),transparent);pointer-events:none;border-radius:20px}
+.gc-glow{box-shadow:0 0 50px rgba(180,100,255,.07),inset 0 1px 0 rgba(255,255,255,.07)}
+
+.div-line{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--neon-purple),var(--neon-pink),transparent);margin:14px 0;opacity:.3}
+.div-dot{width:4px;height:4px;border-radius:50%;background:var(--neon-pink);margin:10px auto;box-shadow:0 0 8px var(--neon-pink)}
+
+/* TEXTO */
+.prose{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,5.8vw,26px);line-height:1.78;color:var(--ink);font-weight:300}
+.prose em{font-style:italic;color:var(--neon-white)}
+.hl{background:linear-gradient(135deg,rgba(255,110,180,.15),rgba(180,100,255,.15));border-radius:4px;padding:1px 7px;color:var(--neon-white);text-shadow:0 0 16px rgba(255,200,255,.4)}
+.glow-t{color:var(--neon-white);text-shadow:0 0 26px rgba(255,200,255,.5)}
+.bq{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(26px,7.5vw,40px);line-height:1.42;font-weight:300;text-align:center;padding:14px 0}
+
+.wr span{display:inline-block;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s}
+.wr.visible span{opacity:1;transform:translateY(0)}
+
+.lbl p{opacity:0;transform:translateY(12px);transition:opacity .65s,transform .65s}
+.lbl.visible p{opacity:1;transform:translateY(0)}
+.lbl.visible p:nth-child(1){transition-delay:.07s}
+.lbl.visible p:nth-child(2){transition-delay:.18s}
+.lbl.visible p:nth-child(3){transition-delay:.29s}
+.lbl.visible p:nth-child(4){transition-delay:.4s}
+.lbl.visible p:nth-child(5){transition-delay:.51s}
+.lbl.visible p:nth-child(6){transition-delay:.62s}
+.lbl.visible p:nth-child(7){transition-delay:.73s}
+.lbl.visible p:nth-child(8){transition-delay:.84s}
+.lbl.visible p:nth-child(9){transition-delay:.95s}
+
+.rv{opacity:0;transform:translateY(34px);transition:opacity .85s cubic-bezier(.25,.46,.45,.94),transform .85s cubic-bezier(.25,.46,.45,.94)}
+.rv.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.22s}.d3{transition-delay:.34s}
+
+.s1t{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,9vw,50px);font-weight:300;line-height:1.15;margin-bottom:26px}
+.s1t .it{font-style:italic;color:var(--neon-pink)}
+
+.fi{animation:floatA 6s ease-in-out infinite}
+.fi:nth-child(2){animation-delay:-2s}
+.fi:nth-child(3){animation-delay:-4s}
+.fi:nth-child(4){animation-delay:-1s}
+@keyframes floatA{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+
+.call-card{background:linear-gradient(135deg,rgba(80,40,180,.12),rgba(180,40,120,.08));border:1px solid rgba(180,100,255,.15);border-radius:18px;padding:26px 22px}
+.call-time{font-size:clamp(58px,17vw,78px);font-family:'Cormorant Garamond',serif;font-weight:300;color:var(--neon-purple);line-height:1;text-shadow:0 0 50px rgba(180,100,255,.5);margin-bottom:6px}
+.call-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3)}
+.call-dots{display:flex;gap:8px;margin:16px 0}
+.cd{width:8px;height:8px;border-radius:50%;background:var(--neon-pink);animation:dPulse 2s ease-in-out infinite}
+.cd:nth-child(2){animation-delay:.3s;background:var(--neon-purple)}
+.cd:nth-child(3){animation-delay:.6s;background:var(--neon-blue)}
+@keyframes dPulse{0%,100%{opacity:.4;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:24px}
+@media(max-width:380px){.mg{grid-template-columns:1fr}}
+.mi{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px 14px;position:relative;overflow:hidden;transition:transform .25s}
+.mi:active{transform:scale(.97)}
+.mi-icon{font-size:20px;margin-bottom:9px}
+.mi-text{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--ink2);line-height:1.5}
+.mi-sub{font-size:11px;color:var(--ink3);margin-top:4px}
+
+.ml{display:flex;align-items:flex-start;gap:14px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.ml:last-child{border-bottom:none}
+.mn{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,9vw,46px);font-weight:300;color:rgba(255,110,180,.18);line-height:1;min-width:40px;text-align:center}
+.mt{flex:1;padding-top:5px}
+.mt-title{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,4.8vw,20px);font-style:italic;color:var(--neon-white);margin-bottom:5px}
+.mt-desc{font-size:13px;color:var(--ink3);line-height:1.7}
+
+.hw{display:inline-block;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(36px,9.5vw,58px);font-weight:300}
+
+.stay{text-align:center;padding:52px 0}
+.stay-big{font-family:'Cormorant Garamond',serif;font-size:clamp(50px,15vw,76px);font-weight:300;line-height:1.1;margin-bottom:20px}
+.shimmer{background:linear-gradient(90deg,var(--neon-white),var(--neon-pink),var(--neon-purple),var(--neon-gold),var(--neon-white));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s linear infinite}
+@keyframes shimmer{to{background-position:200% center}}
+
+.imp-bg{background:radial-gradient(ellipse at center,rgba(80,40,180,.14) 0%,transparent 70%);border-radius:22px;padding:44px 22px;text-align:center}
+
+.tl{list-style:none;padding:0}
+.tl li{padding:13px 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:13px;font-family:'Cormorant Garamond',serif;font-size:clamp(18px,5vw,21px);color:var(--ink)}
+.tl li:last-child{border-bottom:none}
+.tl li::before{content:'✦';color:var(--neon-pink);font-size:9px;flex-shrink:0;opacity:.6}
+
+@keyframes glimmer{0%,100%{text-shadow:none}50%{text-shadow:0 0 16px rgba(255,200,255,.8),0 0 32px rgba(255,110,180,.4)}}
+.gl{animation:glimmer 4s ease-in-out infinite}
+.gl2{animation:glimmer 4s ease-in-out infinite;animation-delay:1.6s}
+.gl3{animation:glimmer 4s ease-in-out infinite;animation-delay:3.2s}
+
+/* CVV CARD */
+.cvv-card{background:linear-gradient(135deg,rgba(80,40,180,.14),rgba(180,40,120,.1));border:1px solid rgba(255,110,180,.2);border-radius:20px;padding:28px 22px;text-align:center;position:relative;overflow:hidden}
+.cvv-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top,rgba(255,110,180,.06),transparent 70%);pointer-events:none}
+.cvv-number{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,13vw,64px);font-weight:300;color:var(--neon-pink);text-shadow:0 0 40px rgba(255,110,180,.5);line-height:1;margin-bottom:6px}
+.cvv-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink3);margin-bottom:18px}
+.cvv-text{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,5vw,20px);color:var(--ink2);line-height:1.7}
+.cvv-link{display:inline-block;margin-top:16px;padding:10px 22px;border-radius:30px;border:1px solid rgba(255,110,180,.35);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--neon-pink);text-decoration:none;transition:background .3s,box-shadow .3s}
+.cvv-link:active{background:rgba(255,110,180,.1);box-shadow:0 0 20px rgba(255,110,180,.2)}
+
+/* EASTER EGGS MOBILE */
+.ee-msg{position:fixed;pointer-events:none;z-index:500;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--neon-pink);text-shadow:0 0 14px rgba(255,110,180,.9);white-space:nowrap;opacity:0;transition:opacity .4s;transform:translateX(-50%)}
+.ee-heart{position:fixed;pointer-events:none;z-index:500;font-size:20px;animation:hFloat 1.1s ease-out forwards;transform:translateX(-50%)}
+@keyframes hFloat{0%{opacity:1;transform:translateX(-50%) translateY(0) scale(.5)}50%{opacity:1;transform:translateX(-50%) translateY(-28px) scale(1)}100%{opacity:0;transform:translateX(-50%) translateY(-70px) scale(.7)}}
+.ee-ripple{position:fixed;pointer-events:none;z-index:498;border-radius:50%;border:1px solid rgba(255,110,180,.4);transform:translate(-50%,-50%) scale(0);animation:ripOut .9s ease-out forwards}
+@keyframes ripOut{to{transform:translate(-50%,-50%) scale(1);opacity:0}}
+
+/* PLAYER */
+.player-wrap{position:fixed;bottom:0;left:0;right:0;z-index:100;padding:13px 20px max(18px,env(safe-area-inset-bottom));background:linear-gradient(to top,rgba(7,5,15,.97) 75%,rgba(7,5,15,.6),transparent);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+.player{max-width:580px;margin:0 auto;display:flex;flex-direction:column;gap:9px}
+.player-top{display:flex;align-items:center;gap:13px}
+.play-btn{width:46px;height:46px;min-width:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--neon-pink),var(--neon-purple));cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 0 16px rgba(255,110,180,.3);touch-action:manipulation;transition:transform .18s,box-shadow .3s}
+.play-btn:active{transform:scale(.92)}
+.play-btn.playing{animation:pPulse 2s ease-out infinite}
+@keyframes pPulse{0%{box-shadow:0 0 0 0 rgba(255,110,180,.5)}100%{box-shadow:0 0 0 16px rgba(255,110,180,0)}}
+.pi{width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:13px solid white;margin-left:3px}
+.pause-ic{display:none;gap:4px;align-items:center}
+.pb{width:3px;height:15px;background:white;border-radius:2px}
+.play-btn.playing .pi{display:none}
+.play-btn.playing .pause-ic{display:flex}
+.pl-info{flex:1;min-width:0}
+.pl-title{font-size:13px;color:var(--neon-white);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-sub{font-size:11px;color:var(--ink3);margin-top:2px}
+.pl-time{font-size:12px;color:var(--ink3);font-variant-numeric:tabular-nums;flex-shrink:0}
+.prog-wrap{cursor:pointer;padding:8px 0;touch-action:manipulation}
+.prog-track{height:3px;background:rgba(255,255,255,.1);border-radius:2px}
+.prog-fill{height:100%;background:linear-gradient(to right,var(--neon-pink),var(--neon-purple));border-radius:2px;width:0%;transition:width .25s linear;position:relative}
+.prog-fill::after{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:10px;height:10px;background:var(--neon-white);border-radius:50%;box-shadow:0 0 8px var(--neon-pink)}
+.vbars{display:flex;align-items:flex-end;gap:2px;height:17px;flex-shrink:0}
+.vb{width:3px;background:var(--neon-pink);border-radius:2px;opacity:.45;transform-origin:bottom}
+.vb.on{animation:vD var(--d,.7s) ease-in-out infinite alternate}
+@keyframes vD{from{transform:scaleY(.12)}to{transform:scaleY(1)}}
+.pdot{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--neon-pink);animation:dPulse 2s infinite;vertical-align:middle;margin-right:5px}
+
+footer{padding:44px 0 150px;text-align:center}
+.ft-glyph{font-family:'Cormorant Garamond',serif;font-size:38px;color:rgba(255,110,180,.28);margin-bottom:12px}
+.ft-text{font-size:12px;color:var(--ink3);letter-spacing:.09em}
+.tag-pill{display:inline-block;padding:4px 12px;border-radius:20px;border:1px solid rgba(255,110,180,.28);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--neon-pink);margin:3px}
+.sp{height:28px}.sp-lg{height:56px}
+.glow-line{width:56px;height:1px;background:linear-gradient(to right,transparent,var(--neon-pink),transparent);margin:14px auto}
+</style>
+</head>
+<body>
+
+<audio id="music" loop>
+  <source src="AQUI_VAI_O_AUDIO.mp3" type="audio/mpeg">
+</audio>
+
+<div class="bg-orbs">
+  <div class="orb orb1"></div><div class="orb orb2"></div>
+  <div class="orb orb3"></div><div class="orb orb4"></div>
+</div>
+<canvas id="stars-canvas"></canvas>
+<canvas id="particles-canvas"></canvas>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">sophia</div>
+    <h1 class="hero-title"><span class="gw">para</span> você</h1>
+    <p class="hero-sub">isso aqui é pra quando<br>você precisar lembrar que importa.
+       clica na tela ai pra aparecer frases ok</p>
+    <div class="scroll-hint">
+      <span>espero que eu não tenha feito nada de errado pra voce esta aqui</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- EI ME ESCUTA -->
+  <section class="section">
+    <div class="eyebrow rv">
+      <div class="eyebrow-line"></div>
+      <div class="eyebrow-text">ei… me escuta</div>
+      <div class="eyebrow-line r"></div>
+    </div>
+
+    <div class="gc gc-glow rv d1">
+      <div class="lbl prose">
+        <p>Eu sei que agora tá pesado.</p>
+        <p>Que você tá cansada de carregar isso tudo sozinha.</p>
+        <p>Que tem momentos que parece que não tem saída.</p>
+        <p>Eu <span class="hl">sei</span>. E mesmo sabendo, eu te peço:</p>
+        <p><em>não faz isso com você.</em></p>
+      </div>
+    </div>
+
+    <div class="sp"></div>
+
+    <div class="bq rv" style="color:var(--ink2)">
+      "você <span class="hw gl">merece</span><br>
+      continuar <span class="hw gl2">existindo</span>."
+    </div>
+
+    <div class="glow-line"></div>
+
+    <div class="gc rv d2">
+      <div class="lbl prose" style="color:var(--ink2)">
+        <p>Não porque é obrigação.</p>
+        <p>Não porque alguém mandou.</p>
+        <p>Mas porque <span class="hl">você tem valor</span> — um valor real, que não some porque o dia tá ruim.</p>
+        <p>Que não some porque você tá exausta.</p>
+        <p>Que não some nunca.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AQUELA NOITE -->
+  <section class="section">
+    <div class="eyebrow rv">
+      <div class="eyebrow-line"></div>
+      <div class="eyebrow-text">aquela noite</div>
+      <div class="eyebrow-line r"></div>
+    </div>
+
+    <div class="call-card rv">
+      <div class="call-time">7h</div>
+      <div class="call-label">de ligação · uma noite inteira</div>
+      <div class="call-dots">
+        <div class="cd"></div><div class="cd"></div><div class="cd"></div>
+      </div>
+      <div class="lbl prose">
+        <p>Sete horas conversando e eu não queria parar.</p>
+        <p>Percebi o sol nascer e a única coisa que eu pensei foi</p>
+        <p><em>que bom que ela existe.</em></p>
+        <p>Isso não foi por acaso, Sophia.</p>
+        <p>Você faz diferença só por ser quem você é.</p>
+      </div>
+    </div>
+
+    <div class="sp"></div>
+
+    <div class="mg rv">
+      <div class="mi fi">
+        <div class="mi-icon">🌙</div>
+        <div class="mi-text">a sua voz quando você ri de verdade</div>
+        <div class="mi-sub">memória que guardo</div>
+      </div>
+      <div class="mi fi">
+        <div class="mi-icon">☕</div>
+        <div class="mi-text">os silêncios que não precisavam de nada</div>
+        <div class="mi-sub">conforto raro</div>
+      </div>
+      <div class="mi fi">
+        <div class="mi-icon">✨</div>
+        <div class="mi-text">cada vez que você se abriu pra mim</div>
+        <div class="mi-sub">honra que carrego</div>
+      </div>
+      <div class="mi fi">
+        <div class="mi-icon">🫀</div>
+        <div class="mi-text">saber que do outro lado tem você, real</div>
+        <div class="mi-sub">raridade do mundo</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COISAS QUE AINDA EXISTEM -->
+  <section class="section">
+    <div class="eyebrow rv">
+      <div class="eyebrow-line"></div>
+      <div class="eyebrow-text">coisas que ainda existem</div>
+      <div class="eyebrow-line r"></div>
+    </div>
+
+    <div class="gc rv">
+      <div class="prose" style="margin-bottom:20px">
+        Mesmo nesse momento.<br>
+        <span class="glow-t">Elas ainda existem.</span>
+      </div>
+      <ul class="tl lbl">
+        <li>o cheiro de chuva em dia quente</li>
+        <li>aquela música que te pega de surpresa</li>
+        <li>a primeira xícara quando a casa tá quieta</li>
+        <li>rir até doer sem motivo nenhum</li>
+        <li>mensagem boa que chega no dia errado</li>
+        <li>céu cor de tangerina antes do sol sumir</li>
+        <li>eu, que não vou a lugar nenhum</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- MOMENTOS -->
+  <section class="section">
+    <div class="eyebrow rv">
+      <div class="eyebrow-line"></div>
+      <div class="eyebrow-text">o que eu ainda quero viver com você</div>
+      <div class="eyebrow-line r"></div>
+    </div>
+
+    <div class="gc gc-glow rv">
+      <div class="ml rv d1">
+        <div class="mn">01</div>
+        <div class="mt">
+          <div class="mt-title">uma viagem sem destino certo</div>
+          <div class="mt-desc">só música, janela aberta e a gente descobrindo o lugar enquanto caminha.</div>
+        </div>
+      </div>
+      <div class="ml rv d2">
+        <div class="mn">02</div>
+        <div class="mt">
+          <div class="mt-title">cozinhar algo complicado juntos</div>
+          <div class="mt-desc">errar tudo e comer o erro com alegria. o que vale é estar junto.</div>
+        </div>
+      </div>
+      <div class="ml rv d3">
+        <div class="mn">03</div>
+        <div class="mt">
+          <div class="mt-title">ficar quieto do seu lado</div>
+          <div class="mt-desc">sem precisar preencher nada. só existir no mesmo espaço. isso já é tudo.</div>
+        </div>
+      </div>
+      <div class="ml rv">
+        <div class="mn">04</div>
+        <div class="mt">
+          <div class="mt-title">ver o sol nascer depois de uma noite difícil</div>
+          <div class="mt-desc">e perceber juntos que passou. que sempre passa.</div>
+        </div>
+      </div>
+      <div class="ml rv">
+        <div class="mn">05</div>
+        <div class="mt">
+          <div class="mt-title">te contar tudo que ainda não falei</div>
+          <div class="mt-desc">com calma, sem pressa. do jeito que as coisas verdadeiras merecem.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MESMO QUANDO PARECE IMPOSSÍVEL -->
+  <section class="section">
+    <div class="eyebrow rv">
+      <div class="eyebrow-line"></div>
+      <div class="eyebrow-text">mesmo quando parece impossível</div>
+      <div class="eyebrow-line r"></div>
+    </div>
+
+    <div class="imp-bg rv">
+      <div class="bq" style="margin-bottom:32px">
+        <span class="hw">eu</span> <span class="hw">acredito</span><br>
+        <span class="hw gl">em</span> <span class="hw gl2">você.</span>
+      </div>
+      <div class="lbl prose" style="font-size:clamp(18px,5.2vw,22px);color:var(--ink2)">
+        <p>Não porque é fácil.</p>
+        <p>Mas porque eu já vi você cair</p>
+        <p>e ainda assim encontrar um jeito de continuar.</p>
+        <p>Mesmo quando demorou.</p>
+        <p>Mesmo quando ninguém viu.</p>
+        <p><em>Eu vi. E eu lembro.</em></p>
+      </div>
+    </div>
+
+    <div class="sp-lg"></div>
+
+    <div class="gc rv">
+      <div class="lbl prose">
+        <p>Tem dias que a esperança é pequena.</p>
+        <p>Quieta. Quase invisível.</p>
+        <p>Mas ela existe, Sophia.</p>
+        <p>E você existe.</p>
+        <p>E <span class="hl">isso já é suficiente</span> pra mais um dia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CVV -->
+  <section class="section">
+    <div class="eyebrow rv">
+      <div class="eyebrow-line"></div>
+      <div class="eyebrow-text">se ficar pesado demais</div>
+      <div class="eyebrow-line r"></div>
+    </div>
+
+    <div class="cvv-card rv">
+      <div class="cvv-number">188</div>
+      <div class="cvv-label">CVV · Centro de Valorização da Vida · 24 horas</div>
+      <div class="cvv-text">
+        Se em algum momento você sentir que não aguenta mais,<br>
+        você não precisa passar por isso sozinha.<br><br>
+        Liga pro <strong style="color:var(--neon-white)">188</strong> ou acessa o chat.<br>
+        É gratuito, sigiloso, e tem alguém do outro lado<br>que quer te escutar.
+      </div>
+      <a class="cvv-link" href="https://cvv.org.br" target="_blank" rel="noopener">cvv.org.br →</a>
+    </div>
+  </section>
+
+  <!-- FICA MAIS -->
+  <section class="section">
+    <div class="eyebrow rv">
+      <div class="eyebrow-line"></div>
+      <div class="eyebrow-text">fica mais</div>
+      <div class="eyebrow-line r"></div>
+    </div>
+
+    <div class="stay rv">
+      <div class="stay-big"><span class="shimmer">fica.</span></div>
+      <div class="prose" style="color:var(--ink2);font-size:clamp(18px,5.2vw,22px);text-align:center;line-height:1.82;max-width:400px;margin:0 auto">
+        Não porque vai ser fácil.<br>
+        Mas porque você merece ver<br>
+        <span class="glow-t">como isso continua.</span>
+      </div>
+    </div>
+
+    <div class="div-line"></div>
+    <div class="div-dot"></div>
+    <div class="div-line"></div>
+
+    <div class="gc gc-glow rv" style="margin-top:32px">
+      <div class="lbl prose">
+        <p>Você tem um futuro que ainda não aconteceu.</p>
+        <p>Tem risadas que você ainda vai dar de um jeito que nem imagina agora.</p>
+        <p>Tem pessoas que vão te conhecer e não vão conseguir imaginar a vida sem você.</p>
+        <p style="margin-top:12px"><span class="hl">Isso não é promessa vazia.</span><br>É o que acontece quando a gente fica.</p>
+      </div>
+    </div>
+
+    <div class="sp-lg"></div>
+
+    <div class="bq rv" style="padding:32px 0">
+      "e <span class="hw gl">eu</span> vou estar<br>
+      aqui com <span class="hw gl2">você</span>."
+    </div>
+  </section>
+
+  <footer>
+    <div class="ft-glyph">✦</div>
+    <div class="ft-text">feito só pra você, sophia · com muito amor</div>
+    <div class="sp"></div>
+    <div>
+      <span class="tag-pill">te cuida</span>
+      <span class="tag-pill">fica mais</span>
+      <span class="tag-pill">você importa</span>
+    </div>
+  </footer>
+
+</main>
+
+<!-- PLAYER -->
+<div class="player-wrap">
+  <div class="player">
+    <div class="player-top">
+      <button class="play-btn" id="play-btn" aria-label="Tocar">
+        <div class="pi"></div>
+        <div class="pause-ic"><div class="pb"></div><div class="pb"></div></div>
+      </button>
+      <div class="pl-info">
+        <div class="pl-title">✦ audio todo fudido meu ok, escuta com calma</div>
+        <div class="pl-sub"><span class="pdot" id="pdot" style="display:none"></span>LI TUDO ERRADO, TEAMO KKKK</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:9px">                                                                                    
+        <div class="vbars" id="vbars">
+          <div class="vb" style="height:5px;--d:.55s"></div>
+          <div class="vb" style="height:9px;--d:.75s"></div>
+          <div class="vb" style="height:13px;--d:.45s"></div>
+          <div class="vb" style="height:7px;--d:.85s"></div>
+          <div class="vb" style="height:11px;--d:.65s"></div>
+        </div>
+        <div class="pl-time" id="pl-time">0:00</div>
+      </div>
+    </div>
+    <div class="prog-wrap" id="prog-wrap">
+      <div class="prog-track">
+        <div class="prog-fill" id="prog-fill"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STARS ──
+const sc=document.getElementById('stars-canvas'),sx=sc.getContext('2d')
+let stars=[]
+function initStars(){
+  sc.width=window.innerWidth;sc.height=window.innerHeight
+  stars=Array.from({length:150},()=>({
+    x:Math.random()*sc.width,y:Math.random()*sc.height,
+    r:Math.random()*1.3+.2,o:Math.random()*.65+.15,
+    phase:Math.random()*Math.PI*2,twinkle:Math.random()>.5
+  }))
+}
+function drawStars(t){
+  sx.clearRect(0,0,sc.width,sc.height)
+  stars.forEach(s=>{
+    const op=s.twinkle?s.o*(.5+.5*Math.sin(t*.018+s.phase)):s.o
+    sx.beginPath();sx.arc(s.x,s.y,s.r,0,Math.PI*2)
+    sx.fillStyle=`rgba(255,240,255,${op})`;sx.fill()
+    if(s.r>1){sx.beginPath();sx.arc(s.x,s.y,s.r*3,0,Math.PI*2);sx.fillStyle=`rgba(255,200,255,${op*.06})`;sx.fill()}
+  })
+}
+
+// ── PARTICLES ──
+const pc=document.getElementById('particles-canvas'),px=pc.getContext('2d')
+let parts=[]
+function initParts(){
+  pc.width=window.innerWidth;pc.height=window.innerHeight
+  parts=Array.from({length:40},()=>mkPart())
+}
+function mkPart(){
+  const cols=['rgba(255,110,180','rgba(180,100,255','rgba(100,170,255','rgba(255,200,80']
+  const c=cols[Math.floor(Math.random()*cols.length)]
+  return{x:Math.random()*pc.width,y:pc.height+Math.random()*100,vx:(Math.random()-.5)*.25,vy:-(Math.random()*.35+.08),r:Math.random()*1.8+.4,c,op:Math.random()*.35+.08}
+}
+function drawParts(){
+  px.clearRect(0,0,pc.width,pc.height)
+  parts.forEach((p,i)=>{
+    p.x+=p.vx;p.y+=p.vy
+    if(p.y<-10)parts[i]=mkPart()
+    px.beginPath();px.arc(p.x,p.y,p.r,0,Math.PI*2)
+    px.fillStyle=p.c+`,${p.op})`;px.fill()
+  })
+}
+
+let raf
+function loop(t){drawStars(t);drawParts();raf=requestAnimationFrame(loop)}
+initStars();initParts();requestAnimationFrame(loop)
+window.addEventListener('resize',()=>{initStars();initParts()})
+
+// ── SCROLL REVEAL ──
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return
+    e.target.classList.add('visible')
+    if(e.target.classList.contains('wr')){
+      e.target.querySelectorAll('span').forEach((s,i)=>{
+        setTimeout(()=>{s.style.opacity='1';s.style.transform='translateY(0)'},i*55)
+      })
+    }
+  })
+},{threshold:.12,rootMargin:'0px 0px -50px 0px'})
+document.querySelectorAll('.rv,.wr,.lbl').forEach(el=>obs.observe(el))
+
+// ── AUDIO ──
+const audio=document.getElementById('music')
+const playBtn=document.getElementById('play-btn')
+const progFill=document.getElementById('prog-fill')
+const progWrap=document.getElementById('prog-wrap')
+const plTime=document.getElementById('pl-time')
+const pdot=document.getElementById('pdot')
+const vbs=document.querySelectorAll('.vb')
+let playing=false
+
+const fmt=s=>{const m=Math.floor(s/60),sec=Math.floor(s%60);return m+':'+(sec<10?'0':'')+sec}
+
+playBtn.addEventListener('click',()=>playing?audio.pause():audio.play().catch(()=>{}))
+
+audio.addEventListener('play',()=>{
+  playing=true;playBtn.classList.add('playing');pdot.style.display='inline-block'
+  vbs.forEach(b=>b.classList.add('on'))
+})
+audio.addEventListener('pause',()=>{
+  playing=false;playBtn.classList.remove('playing');pdot.style.display='none'
+  vbs.forEach(b=>b.classList.remove('on'))
+})
+audio.addEventListener('timeupdate',()=>{
+  if(!audio.duration)return
+  progFill.style.width=(audio.currentTime/audio.duration*100)+'%'
+  plTime.textContent=fmt(audio.currentTime)
+})
+
+// progress touch + click
+function seekAt(clientX){
+  if(!audio.duration)return
+  const r=progWrap.getBoundingClientRect()
+  audio.currentTime=Math.max(0,Math.min(1,(clientX-r.left)/r.width))*audio.duration
+}
+progWrap.addEventListener('click',e=>seekAt(e.clientX))
+progWrap.addEventListener('touchstart',e=>{seekAt(e.touches[0].clientX)},{passive:true})
+
+// ── EASTER EGGS MOBILE ──
+const eeMsgs=['fica, por favor.','você é amada.','isso vai passar.','eu acredito em você.','não desiste ainda.','você não está sozinha.','te cuida.']
+let eeTimeout,lastTouch=0
+
+function spawnHeart(x,y){
+  const h=document.createElement('div')
+  h.className='ee-heart'
+  h.style.left=x+'px';h.style.top=y+'px'
+  h.textContent=['💗','✦','🌸','💜','✨'][Math.floor(Math.random()*5)]
+  document.body.appendChild(h)
+  setTimeout(()=>h.remove(),1200)
+}
+
+function spawnRipple(x,y){
+  const r=document.createElement('div')
+  r.className='ee-ripple'
+  const sz=60+Math.random()*40
+  r.style.cssText=`left:${x}px;top:${y}px;width:${sz}px;height:${sz}px`
+  document.body.appendChild(r)
+  setTimeout(()=>r.remove(),900)
+}
+
+let msgEl=document.createElement('div')
+msgEl.className='ee-msg'
+document.body.appendChild(msgEl)
+
+function showMsg(x,y){
+  msgEl.textContent=eeMsgs[Math.floor(Math.random()*eeMsgs.length)]
+  msgEl.style.left=x+'px';msgEl.style.top=(y-48)+'px';msgEl.style.opacity='1'
+  clearTimeout(eeTimeout)
+  eeTimeout=setTimeout(()=>msgEl.style.opacity='0',2200)
+}
+
+// só toque longo (500ms) dispara mensagem — toque curto só coração
+// assim não atrapalha scroll nem cliques normais
+let touchTimer,touchX,touchY
+document.addEventListener('touchstart',e=>{
+  // ignora player
+  if(e.target.closest('.player-wrap'))return
+  const t=e.touches[0]
+  touchX=t.clientX;touchY=t.clientY
+  spawnRipple(touchX,touchY)
+  touchTimer=setTimeout(()=>{
+    spawnHeart(touchX,touchY)
+    showMsg(touchX,touchY)
+  },500)
+},{passive:true})
+
+document.addEventListener('touchend',()=>clearTimeout(touchTimer),{passive:true})
+document.addEventListener('touchmove',()=>clearTimeout(touchTimer),{passive:true})
+
+// no desktop: clique normal
+document.addEventListener('click',e=>{
+  if(e.target.closest('.player-wrap,.cvv-link'))return
+  spawnHeart(e.clientX,e.clientY)
+  if(Math.random()>.55)showMsg(e.clientX,e.clientY)
+})
+</script>
+</body>
+</html>
+HTMLEOF
+echo "OK: $(wc -c < /mnt/user-data/outputs/amor.html) bytes"
